@@ -21,6 +21,7 @@ positions = []
 
 
 def square_move_sequence(scf):
+    # Moves drone in a square, maintaining same height throughout
     with PositionHlCommander(scf, controller=PositionHlCommander.CONTROLLER_PID, default_height=0.5) as pc:
         time.sleep(5)
         pc.forward(distance_m=0.5)
@@ -30,6 +31,24 @@ def square_move_sequence(scf):
         pc.back(distance_m=0.5)
         time.sleep(2)
         pc.right(distance_m=0.5)
+
+
+def up_down_move_sequence(scf):
+    # Moves drones in a wave-like formation
+    with PositionHlCommander(scf, controller=PositionHlCommander.CONTROLLER_PID, default_height=0.5) as pc:
+        time.sleep(5)
+        for i in range(6):
+            pc.move_distance(distance_x_m=0, distance_y_m=0.2, distance_z_m=0.5)
+            time.sleep(2)
+            pc.move_distance(distance_x_m=0, distance_y_m=0.2, distance_z_m=-0.5)
+            time.sleep(2)
+        pc.move_distance(distance_x_m=-0.5, distance_y_m=0, distance_z_m=0)
+        for i in range(6):
+            pc.move_distance(distance_x_m=0, distance_y_m=-0.2, distance_z_m=0.5)
+            time.sleep(2)
+            pc.move_distance(distance_x_m=0, distance_y_m=-0.2, distance_z_m=-0.5)
+            time.sleep(2)
+        pc.move_distance(distance_x_m=-0.5, distance_y_m=0, distance_z_m=0)
 
 
 def log_pos_callback(timestamp, data, logconf):
@@ -73,6 +92,7 @@ if __name__ == '__main__':
 
         logconf.start()
 
+        # Specify sequence to be used here
         square_move_sequence(scf)
 
         logconf.stop()
