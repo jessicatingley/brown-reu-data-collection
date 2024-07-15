@@ -1,3 +1,4 @@
 pandas~=2.2.2
 matplotlib~=3.9.1
 cflib~=0.1.26
+numpy~=1.26.4
