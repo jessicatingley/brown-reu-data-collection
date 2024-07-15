@@ -39,52 +39,51 @@ if __name__ == '__main__':
     vicon_y = vicon_data['TY'].values / 1000
     vicon_z = vicon_data['TZ'].values / 1000
     vicon_time = vicon_data['Time'].values
-    avg_vicon_x = np.mean(vicon_x[:10])
-    avg_vicon_y = np.mean(vicon_y[:10])
-    avg_vicon_z = np.mean(vicon_z[:10])
+    avg_vicon_x = np.mean(vicon_x[:20])
+    avg_vicon_y = np.mean(vicon_y[:20])
+    avg_vicon_z = np.mean(vicon_z[:20])
 
     # Get standard deviation of first ten values -- acts as threshold
-    threshold_state_est_x = np.std(state_estimate_x[:10])
-    threshold_state_est_y = np.std(state_estimate_y[:10])
-    threshold_state_est_z = np.std(state_estimate_z[:10])
-    threshold_vicon_x = np.std(vicon_x[:10])
-    threshold_vicon_y = np.std(vicon_y[:10])
-    threshold_vicon_z = np.std(vicon_z[:10])
+    threshold_state_est_x = np.std(state_estimate_x[:20])
+    threshold_state_est_y = np.std(state_estimate_y[:20])
+    threshold_state_est_z = np.std(state_estimate_z[:20])
+    threshold_vicon_x = np.std(vicon_x[:20])
+    threshold_vicon_y = np.std(vicon_y[:20])
+    threshold_vicon_z = np.std(vicon_z[:20])
     print(threshold_state_est_x, threshold_state_est_y)
 
     # Find point at which movement starts - iterate through data until value surpasses threshold + avg of first 10 vals
     state_est_start_x = None
     for i in range(len(state_estimate_x)):
-        if state_estimate_x[i] > avg_state_estimate_x + threshold_state_est_x:
+        if state_estimate_x[i] > avg_state_estimate_x + 5*threshold_state_est_x:
             state_est_start_x = i
             break
     state_est_start_y = None
     for i in range(len(state_estimate_y)):
-        if state_estimate_y[i] > avg_state_estimate_y + threshold_state_est_y:
+        if state_estimate_y[i] > avg_state_estimate_y + 5*threshold_state_est_y:
             state_est_start_y = i
             break
     state_est_start_z = None
     for i in range(len(state_estimate_z)):
-        if state_estimate_z[i] > avg_state_estimate_z + threshold_state_est_z:
+        if state_estimate_z[i] > avg_state_estimate_z + 5*threshold_state_est_z:
             state_est_start_z = i
             break
     vicon_start_val_x = None
     for i in range(len(vicon_x)):
-        if vicon_x[i] > avg_vicon_x + threshold_vicon_x:
+        if vicon_x[i] > avg_vicon_x + 20*threshold_vicon_x:
             vicon_start_val_x = i
             break
     vicon_start_val_y = None
     for i in range(len(vicon_y)):
-        if vicon_y[i] > avg_vicon_y + threshold_vicon_y:
+        if vicon_y[i] > avg_vicon_y + 15*threshold_vicon_y:
             vicon_start_val_y = i
             break
     vicon_start_val_z = None
     for i in range(len(vicon_z)):
-        if vicon_z[i] > avg_vicon_z + threshold_vicon_z:
+        if vicon_z[i] > avg_vicon_z + 6*threshold_vicon_z:
             vicon_start_val_z = i
             break
 
-    print(vicon_start_val_x)
     # Truncated data to be plotted
     new_state_estimate_x = state_estimate_x[state_est_start_x:]
     new_state_estimate_y = state_estimate_y[state_est_start_y:]

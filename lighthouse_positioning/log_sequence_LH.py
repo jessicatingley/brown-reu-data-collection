@@ -22,15 +22,19 @@ positions = []
 
 def square_move_sequence(scf):
     # Moves drone in a square, maintaining same height throughout
-    with PositionHlCommander(scf, controller=PositionHlCommander.CONTROLLER_PID, default_height=0.5) as pc:
-        time.sleep(5)
-        pc.forward(distance_m=0.5)
+    commander = scf.cf.high_level_commander
+    square = [(0.5, 0.0, 0.5),
+              (0.0, 0.5, 0.5),
+              (-0.5, 0.0, 0.5),
+              (0.0, -0.5, 0.5)]
+
+    commander.takeoff(absolute_height_m=0.5, duration_s=1.5)
+    time.sleep(5)
+    for pos in square:
+        commander.go_to(pos[0], pos[1], pos[2], yaw=0, duration_s=2.)
         time.sleep(2)
-        pc.left(distance_m=0.5)
-        time.sleep(2)
-        pc.back(distance_m=0.5)
-        time.sleep(2)
-        pc.right(distance_m=0.5)
+
+    commander.land(absolute_height_m=0.0, duration_s=1.5)
 
 
 def up_down_move_sequence(scf):
