@@ -23,15 +23,16 @@ deck_attached_event = Event()
 def square_move_sequence(scf):
     # Moves drone in a square, maintaining same height throughout
     commander = scf.cf.high_level_commander
-    square = [(0.5, 0.0, 0.5),
+    square = [(0.0, 0.0, 0.5),
               (0.0, 0.5, 0.5),
-              (-0.5, 0.0, 0.5),
-              (0.0, -0.5, 0.5)]
+              (0.5, 0.5, 0.5),
+              (0.5, 0.0, 0.5),
+              (0.0, 0.0, 0.5)]
 
     commander.takeoff(absolute_height_m=0.5, duration_s=1.5)
     time.sleep(5)
     for pos in square:
-        commander.go_to(pos[0], pos[1], pos[2], yaw=0, duration_s=2.)
+        commander.go_to(pos[0], pos[1], pos[2], yaw=0, duration_s=2.0)
         time.sleep(2)
 
     commander.land(absolute_height_m=0.0, duration_s=1.5)
@@ -88,7 +89,7 @@ if __name__ == '__main__':
 
     with SyncCrazyflie(URI, cf=Crazyflie(rw_cache='./cache')) as scf:
         # 1 = PID, 2 = Mellinger
-        scf.cf.param_set_value('stabilizer.controller', 1)
+        scf.cf.param.set_value('stabilizer.controller', 1)
         scf.cf.param.add_update_callback(group='deck', name='bcLighthouse4',
                                          cb=param_deck)
         time.sleep(1)
