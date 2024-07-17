@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62536e36-7da9-4684-9445-670c9649f82d" name="Changes" comment="Adjust square sequence">
+    <list default="true" id="62536e36-7da9-4684-9445-670c9649f82d" name="Changes" comment="Test using .go_to instead of .move_distance">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plot_csv.py" beforeDir="false" afterPath="$PROJECT_DIR$/plot_csv.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lighthouse_positioning/lighthouse_vicon_csv_files/cf10_LH_square_vicon.csv" beforeDir="false" afterPath="$PROJECT_DIR$/cf10_LH_square_vicon.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lighthouse_positioning/log_sequence_LH.py" beforeDir="false" afterPath="$PROJECT_DIR$/lighthouse_positioning/log_sequence_LH.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,9 +46,9 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/lighthouse_positioning/lighthouse_vicon_csv_files" />
       <recent name="$PROJECT_DIR$/lighthouse_positioning/lighthouse_csv_files" />
-      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/lighthouse_positioning" />
     </key>
   </component>
@@ -72,7 +72,7 @@
       <workItem from="1720793800907" duration="131000" />
       <workItem from="1720793974336" duration="811000" />
       <workItem from="1720795780454" duration="12338000" />
-      <workItem from="1721048505763" duration="14007000" />
+      <workItem from="1721048505763" duration="5711000" />
     </task>
     <task id="LOCAL-00001" summary="Create repo">
       <option name="closed" value="true" />
@@ -98,23 +98,7 @@
       <option name="project" value="LOCAL" />
       <updated>1721056864814</updated>
     </task>
-    <task id="LOCAL-00004" summary="Change wave sequence to use .go_to&#10;Add safety to ensure correct deck is attached">
-      <option name="closed" value="true" />
-      <created>1721059329739</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1721059329739</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Adjust square sequence">
-      <option name="closed" value="true" />
-      <created>1721079803054</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1721079803054</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,9 +119,7 @@
     <MESSAGE value="Create repo" />
     <MESSAGE value="Attempted to fix plot alignment issue" />
     <MESSAGE value="Test using .go_to instead of .move_distance" />
-    <MESSAGE value="Change wave sequence to use .go_to&#10;Add safety to ensure correct deck is attached" />
-    <MESSAGE value="Adjust square sequence" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adjust square sequence" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test using .go_to instead of .move_distance" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/log_sequence_LH_py$log_sequence_LH.coverage" NAME="log_sequence_LH Coverage Results" MODIFIED="1720805673574" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lighthouse_positioning" />

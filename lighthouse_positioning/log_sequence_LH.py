@@ -12,7 +12,7 @@ from cflib.crazyflie.syncCrazyflie import SyncCrazyflie
 from cflib.positioning.position_hl_commander import PositionHlCommander
 from cflib.utils import uri_helper
 
-URI = uri_helper.uri_from_env(default='radio://0/80/2M/E7E7E7E70A')
+URI = uri_helper.uri_from_env(default='radio://0/120/2M/E7E7E7E70E')
 
 logging.basicConfig(level=logging.ERROR)
 positions = []
@@ -24,9 +24,9 @@ def square_move_sequence(scf):
     # Moves drone in a square, maintaining same height throughout
     commander = scf.cf.high_level_commander
     square = [(0.0, 0.0, 0.5),
-              (0.0, 0.5, 0.5),
-              (0.5, 0.5, 0.5),
-              (0.5, 0.0, 0.5),
+              (0.0, 1.0, 0.5),
+              (1.0, 1.0, 0.5),
+              (1.0, 0.0, 0.5),
               (0.0, 0.0, 0.5)]
 
     commander.takeoff(absolute_height_m=0.5, duration_s=1.5)
@@ -43,24 +43,28 @@ def up_down_move_sequence(scf):
     commander = scf.cf.high_level_commander
     commander.takeoff(absolute_height_m=0.5, duration_s=1.5)
     time.sleep(5)
-    for i in range(2):
-        commander.go_to(x=0, y=0.3, z=0.5, yaw=0, duration_s=1)
-        time.sleep(1)
-        commander.go_to(x=0, y=0.3, z=-0.5, yaw=0, duration_s=1)
-        time.sleep(1)
+    commander.go_to(x=0, y=0.3, z=1.5, yaw=0, duration_s=3.0)
+    time.sleep(3)
+    commander.go_to(x=0, y=0.6, z=0.5, yaw=0, duration_s=3.0)
+    time.sleep(3)
+    commander.go_to(x=0, y=0.9, z=1.5, yaw=0, duration_s=3.0)
+    time.sleep(3)
+    commander.go_to(x=0, y=1.2, z=0.5, yaw=0, duration_s=3.0)
+    time.sleep(3)
 
-    time.sleep(2)
-    commander.go_to(x=-0.5, y=0, z=0, yaw=0, duration_s=2)
+    commander.go_to(x=-0.5, y=1.2, z=0.5, yaw=0, duration_s=2)
     time.sleep(2)
 
-    for i in range(2):
-        commander.go_to(x=0, y=-0.3, z=0.5, yaw=0, duration_s=1)
-        time.sleep(1)
-        commander.go_to(x=0, y=-0.3, z=-0.5, yaw=0, duration_s=1)
-        time.sleep(1)
+    commander.go_to(x=-0.5, y=0.9, z=1.5, yaw=0, duration_s=3.0)
+    time.sleep(3)
+    commander.go_to(x=-0.5, y=0.6, z=0.5, yaw=0, duration_s=3.0)
+    time.sleep(3)
+    commander.go_to(x=-0.5, y=0.3, z=1.5, yaw=0, duration_s=3.0)
+    time.sleep(3)
+    commander.go_to(x=-0.5, y=0.0, z=0.5, yaw=0, duration_s=3.0)
 
-    time.sleep(2)
-    commander.go_to(x=0.5, y=0, z=0, yaw=0, duration_s=2)
+    time.sleep(3)
+    commander.go_to(x=0.0, y=0, z=0.5, yaw=0, duration_s=2)
     time.sleep(2)
 
     commander.land(absolute_height_m=0.0, duration_s=1.5)
@@ -72,14 +76,14 @@ def log_pos_callback(timestamp, data, logconf):
     positions.append([data['stateEstimate.x'], data['stateEstimate.y'], data['stateEstimate.z']])
 
 
-def param_deck(_, value_str):
-    value = int(value_str)
-    print(value)
-    if value:
-        deck_attached_event.set()
-        print('Deck is attached!')
-    else:
-        print('Deck is NOT attached!')
+# def param_deck(_, value_str):
+#     value = int(value_str)
+#     print(value)
+#     if value:
+#         deck_attached_event.set()
+#         print('Deck is attached!')
+#     else:
+#         print('Deck is NOT attached!')
 
 
 if __name__ == '__main__':
@@ -90,8 +94,8 @@ if __name__ == '__main__':
     with SyncCrazyflie(URI, cf=Crazyflie(rw_cache='./cache')) as scf:
         # 1 = PID, 2 = Mellinger
         scf.cf.param.set_value('stabilizer.controller', 1)
-        scf.cf.param.add_update_callback(group='deck', name='bcLighthouse4',
-                                         cb=param_deck)
+        #scf.cf.param.add_update_callback(group='deck', name='bcLighthouse4',
+                                         #cb=param_deck)
         time.sleep(1)
 
         logconf = LogConfig(name='Position', period_in_ms=10)
@@ -101,9 +105,9 @@ if __name__ == '__main__':
         scf.cf.log.add_config(logconf)
         logconf.data_received_cb.add_callback(log_pos_callback)
 
-        if not deck_attached_event.wait(timeout=5):
-            print('No flow deck detected!')
-            sys.exit(1)
+        # if not deck_attached_event.wait(timeout=5):
+        #     print('No lighthouse deck detected!')
+        #     sys.exit(1)
 
         logconf.start()
 
