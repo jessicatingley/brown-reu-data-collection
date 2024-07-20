@@ -70,6 +70,30 @@ def up_down_move_sequence(scf):
     commander.land(absolute_height_m=0.0, duration_s=1.5)
 
 
+def cross_sequence_lighthouse(scf):
+    commander = scf.cf.high_level_commander
+    commander.takeoff(absolute_height_m=0.75, duration_s=1.5)
+    time.sleep(5)
+    commander.go_to(x=-1.5, y=0, z=.75, yaw=0, duration_s=2)
+    time.sleep(5)
+    commander.go_to(x=0, y=0, z=.75, yaw=0, duration_s=2)
+    time.sleep(5)
+    commander.go_to(x=3.0, y=0, z=.75, yaw=0, duration_s=2)
+    time.sleep(5)
+    commander.go_to(x=0.0, y=0, z=.75, yaw=0, duration_s=2)
+    time.sleep(5)
+    commander.go_to(x=0.0, y=-2.5, z=.75, yaw=0, duration_s=2)
+    time.sleep(5)
+    commander.go_to(x=0.0, y=0, z=.75, yaw=0, duration_s=2)
+    time.sleep(5)
+    commander.go_to(x=0.0, y=1.5, z=.75, yaw=0, duration_s=2)
+    time.sleep(5)
+    commander.go_to(x=0.0, y=0.0, z=.75, yaw=0, duration_s=2)
+    time.sleep(5)
+
+    commander.land(absolute_height_m=0.0, duration_s=2.0)
+
+
 def log_pos_callback(timestamp, data, logconf):
     print(data)
     global positions
@@ -112,11 +136,12 @@ if __name__ == '__main__':
         logconf.start()
 
         # Specify sequence to be used here
-        up_down_move_sequence(scf)
+        cross_sequence_lighthouse(scf)
+        time.sleep(5)
 
         logconf.stop()
 
-    with open(os.path.join('lighthouse_csv_files', csv_file_name), 'w') as csvfile:
+    with open(os.path.join('lighthouse_flow_csv_files', csv_file_name), 'w') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['State Estimate X', 'State Estimate Y', 'State Estimate Z'])
         writer.writerows(positions)
