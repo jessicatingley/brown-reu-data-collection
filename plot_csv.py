@@ -29,7 +29,7 @@ def align_data(vicon_data, estimate_data, vicon_time):
 if __name__ == '__main__':
     # Change file paths for different sensor types
     file_name = os.path.join('lighthouse_positioning/lighthouse_csv_files', sys.argv[1])
-    vicon_file_name = os.path.join('lighthouse_positioning/lighthouse_vicon_csv_files', sys.argv[2])
+    vicon_file_name = os.path.join('lighthouse_vicon_csv_files', sys.argv[2])
     output_name = os.path.join('lighthouse_positioning/lighthouse_plots', sys.argv[3])
 
     # Read data from csv files
